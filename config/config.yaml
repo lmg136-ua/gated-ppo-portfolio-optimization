@@ -1,0 +1,171 @@
+# ============================================================
+# TFG RL Portfolio - Configuracion activa del repositorio
+# Version final incluida en GitHub: Full Gated V2
+# ============================================================
+
+experiment:
+  version: "full_gated_v2"
+  mode: "experiment"
+  strict_real_context: true
+  require_real_volume: true
+  require_real_benchmark: true
+  save_run_metadata: true
+
+universe:
+  n_assets: 100
+  source: "sp500"
+  custom_file: null
+
+dates:
+  start: "2010-01-01"
+  end: "2024-12-31"
+  frequency: "1d"
+
+walk_forward:
+  train_years: 4
+  val_years: 1
+  test_years: 1
+  slide_months: 6
+
+market_features:
+  lookback_window: 20
+  features:
+    - "return_1d"
+    - "return_5d"
+    - "return_20d"
+    - "volatility_20d"
+    - "momentum_20d"
+    - "rsi_14"
+    - "volume_ratio"
+    - "realized_volatility_20d"
+  market_state:
+    correlation_window: 20
+    dispersion_window: 20
+    benchmark_lookback: 20
+    realized_vol_window: 20
+    correlation_min_periods: 10
+
+factor_features:
+  beta_window: 63
+  momentum_window: 63
+  low_vol_window: 63
+
+context:
+  fred_series:
+    - "DGS10"
+    - "DGS2"
+    - "T10Y2Y"
+    - "UNRATE"
+    - "CPIAUCSL"
+    - "FEDFUNDS"
+    - "VIXCLS"
+    - "DCOILWTICO"
+    - "DEXUSEU"
+  lag_days: 1
+  normalize: true
+  derived_features: true
+  regime_detector:
+    enabled: true
+    n_states: 3
+    covariance_type: "diag"
+    random_state: 42
+
+model:
+  market_encoder:
+    hidden_dims: [256, 128]
+    output_dim: 64
+    dropout: 0.1
+  context_encoder:
+    hidden_dims: [64, 32]
+    output_dim: 64
+    dropout: 0.1
+  gating:
+    hidden_dims: [64, 32]
+    asset_hidden_dims: [64]
+    use_vol_proxy: true
+    use_regime_features: true
+    use_market_state_features: true
+  policy:
+    net_arch: [256, 128]
+    activation: "tanh"
+
+environment:
+  transaction_cost: 0.001
+  slippage: 0.0005
+  w_max: 0.10
+  initial_capital: 1_000_000
+  reward_type: "downside_asymmetric_v2"  # log_return_net | downside_asymmetric_v2
+  turnover_penalty_coeff: 0.01
+  action_type: "delta"
+  delta_scale: 1.0
+  reward:
+    lambda_turnover: 0.01
+    lambda_downside: 1.50
+    downside_factor: 2.0
+    lambda_drawdown: 0.50
+
+safety:
+  enabled: true
+  w_min: 0.0
+  w_max: 0.10
+  sum_constraint: 1.0
+  solver: "OSQP"
+  tau_min: 0.01
+  tau_max: 0.10
+  adaptive_shield:
+    enabled: true
+    stress_sensitivity: 0.60
+    inaction_sensitivity: 0.50
+    regime_weight: 0.40
+    vol_weight: 0.35
+    corr_weight: 0.25
+    min_trade_budget_ratio: 0.35
+
+training:
+  total_timesteps: 500_000
+  n_envs: 1
+  learning_rate: 3.0e-4
+  n_steps: 2048
+  batch_size: 64
+  n_epochs: 10
+  gamma: 0.99
+  gae_lambda: 0.95
+  clip_range: 0.2
+  ent_coef: 0.01
+  vf_coef: 0.5
+  max_grad_norm: 0.5
+  seed: 42
+  seeds: [42]
+  benchmark_seeds: [42, 123, 999]
+  use_benchmark_seeds: false
+  device: "auto"
+  eval_metric: "financial_v2"
+  eval_freq_fraction: 10
+  model_selection:
+    sharpe_weight: 0.5
+    calmar_weight: 0.5
+    max_no_improvement_evals: 6
+    min_evals: 3
+
+baselines:
+  protocol_name: "version_2"
+  rebalance_every: 1
+  estimation_window: 252
+  equal_weight: true
+  inverse_volatility: true
+  min_variance: true
+  mean_variance: true
+  buy_and_hold_index: true
+  benchmark_ticker: "SPY"
+
+paths:
+  data_raw: "runtime/data/raw"
+  data_processed: "runtime/data/processed"
+  models: "runtime/models"
+  logs: "runtime/logs"
+  summaries: "runtime/summaries"
+  manifests: "runtime/manifests"
+
+logging:
+  level: "INFO"
+  save_freq: 10000
