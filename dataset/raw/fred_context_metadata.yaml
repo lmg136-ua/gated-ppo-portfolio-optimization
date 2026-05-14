@@ -1,0 +1,15 @@
+source: fred_real_pdr
+downloaded_at: '2026-04-14T14:01:18.102433Z'
+series_ids:
+- DGS10
+- DGS2
+- T10Y2Y
+- UNRATE
+- CPIAUCSL
+- FEDFUNDS
+- VIXCLS
+- DCOILWTICO
+- DEXUSEU
+lag_days: 1
+start: '2010-01-01'
+end: '2024-12-31'

@@ -6,6 +6,7 @@ Repositorio del TFG centrado en el modelo final `PPO_gated_full` para optimizaci
 
 - codigo fuente del pipeline completo
 - configuracion final del experimento
+- dataset usado en la evaluacion final
 - baselines clasicos usados en la comparativa
 - resultados finales ya procesados y listos para consulta
 
@@ -14,6 +15,7 @@ Repositorio del TFG centrado en el modelo final `PPO_gated_full` para optimizaci
 ```text
 config/        configuracion activa del experimento
 data/          descarga, validacion y preprocesado
+dataset/       datos utilizados en la evaluacion final
 features/      features de mercado, regimen y factores
 models/        policy, encoders y gating
 environment/   entorno de cartera y restricciones
@@ -53,9 +55,19 @@ En `results/final_v2/` se incluyen:
 - resumen final del modelo `PPO_gated_full`
 - resultados por fold del modelo final
 
+## Dataset incluido
+
+En `dataset/raw/` se incluyen los datos de entrada usados en el experimento final:
+
+- precios ajustados diarios de los 100 activos del universo
+- volumen diario de esos 100 activos
+- benchmark `SPY`
+- bloque de contexto macrofinanciero procedente de FRED
+- metadatos de descarga y listado final de tickers
+
 ## Notas
 
-- los datos brutos no se suben al repositorio
 - el proyecto esta orientado a la configuracion final usada en el TFG
 - las salidas generadas al ejecutar experimentos se escriben en `runtime/` y no se versionan
+- el dataset incluido corresponde al bloque de datos usado en la evaluacion final
 - los detalles minimos de reproducibilidad se recogen en `docs/REPRODUCIBILITY.md`

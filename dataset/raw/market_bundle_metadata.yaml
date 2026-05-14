@@ -1,0 +1,11 @@
+source: yfinance
+downloaded_at: '2026-04-14T14:01:10.550164Z'
+prices_path: results\data\raw\prices_raw.parquet
+volumes_path: results\data\raw\volumes_raw.parquet
+benchmark_path: results\data\raw\benchmark_raw.parquet
+has_volume: true
+has_benchmark: true
+benchmark_ticker: SPY
+start: '2010-01-01'
+end: '2024-12-31'
+frequency: 1d
