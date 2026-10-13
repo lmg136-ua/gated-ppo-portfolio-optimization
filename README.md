@@ -206,7 +206,7 @@ python experiments/run_experiment.py --mode full
 
 ## Academic Reference & Authorship
 
-Developed and defended as a Bachelor's Degree Final Thesis (**Trabajo de Fin de Grado - Doble Grado en Ingeniería Informática y ADE**) at the **Universidad de Alicante (UA)**, awarded the highest grade (**10 / 10 - Matrícula de Honor**).
+Developed and defended as a Bachelor's Degree Final Thesis (**Trabajo de Fin de Grado - Doble Grado en Ingeniería Informática y ADE**) at the **Universidad de Alicante (UA)**, awarded the highest grade (**10 / 10**).
 
 * **Author**: Lidia Montero García ([@lmg136-ua](https://github.com/lmg136-ua))
 * **Advisor / Tutor**: Dr. Higinio Mora Mora (Universidad de Alicante)
