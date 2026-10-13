@@ -6,6 +6,7 @@
 [![CVXPY OSQP](https://img.shields.io/badge/Solver-OSQP%20Convex%20QP-brightgreen.svg)](https://osqp.org/)
 [![Universe](https://img.shields.io/badge/Universe-S%26P%20100%20Equities-informational.svg)](https://www.spglobal.com/)
 [![Evaluation](https://img.shields.io/badge/Validation-13%20Walk--Forward%20Folds-blueviolet.svg)](#empirical-performance)
+[![Thesis Report](https://img.shields.io/badge/Thesis%20Report-PDF%20(10%2F10)-red.svg?logo=adobe-acrobat-reader&logoColor=white)](docs/TFG_Memoria.pdf)
 [![License: CC BY-NC 4.0](https://img.shields.io/badge/License-CC_BY--NC_4.0-lightgrey.svg)](LICENSE)
 
 An institutional-grade deep reinforcement learning framework for large-scale portfolio management ($N = 100$ assets). Integrates **dual-branch gating networks**, **macroeconomic regime conditioning (FRED + HMM)**, and an **Adaptive Convex Safety Shield (CVXPY/OSQP)** to achieve superior risk-adjusted downside returns under realistic market frictions.
@@ -205,11 +206,25 @@ python experiments/run_experiment.py --mode full
 
 ## Academic Reference & Authorship
 
-Developed as a Bachelor's Degree Final Project (**Trabajo de Fin de Grado - TFG en Ingeniería Informática**) at the **Universidad de Alicante (UA)**.
+Developed and defended as a Bachelor's Degree Final Thesis (**Trabajo de Fin de Grado - Doble Grado en Ingeniería Informática y ADE**) at the **Universidad de Alicante (UA)**, awarded the highest grade (**10 / 10 - Matrícula de Honor**).
 
-* **Author**: [lmg136-ua](https://github.com/lmg136-ua)
+* **Author**: Lidia Montero García ([@lmg136-ua](https://github.com/lmg136-ua))
+* **Advisor / Tutor**: Dr. Higinio Mora Mora (Universidad de Alicante)
 * **Academic Year**: 2025–2026
-* **Topic**: Deep Reinforcement Learning with Exogenous Macro Conditioning and Operational Safety Constraints for Portfolio Optimization.
+* **Full Dissertation (PDF)**: [📄 Download `docs/TFG_Memoria.pdf`](docs/TFG_Memoria.pdf)
+
+### Citation
+
+```bibtex
+@misc{montero2026gatedppo,
+  author       = {Montero García, Lidia},
+  title        = {Optimización dinámica de carteras mediante aprendizaje por refuerzo profundo con contexto exógeno y control adaptativo del riesgo},
+  school       = {Universidad de Alicante},
+  year         = {2026},
+  note         = {Bachelor's Thesis (TFG). Grade: 10/10},
+  url          = {https://github.com/lmg136-ua/gated-ppo-portfolio-optimization}
+}
+```
 
 ---
 
