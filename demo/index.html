@@ -1,0 +1,468 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Gated PPO Portfolio | Proceso visual</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="bg" aria-hidden="true">
+    <div class="bg-grid"></div>
+    <div class="bg-flow"></div>
+  </div>
+
+  <div class="progress-bar" aria-hidden="true">
+    <div class="progress-fill" id="progressFill"></div>
+  </div>
+
+  <main class="viewport">
+    <div class="slider" id="slider">
+      <section class="scene active" id="scene-0" aria-labelledby="title-0">
+        <div class="scene-content">
+          <div class="scene-text">
+            <span class="scene-tag">Etapa 1</span>
+            <h1 class="scene-title" id="title-0">Datos de Mercado</h1>
+            <p class="scene-desc">El modelo recibe varias familias de senales: precios, volumen, indicadores tecnicos, volatilidad y liquidez. No entra una sola grafica; entra un estado de mercado completo.</p>
+          </div>
+
+          <div class="scene-visual">
+            <div class="market-board">
+              <div class="market-cards" aria-label="Familias de datos de mercado">
+                <article class="signal-card sc-price">
+                  <span>Precios</span>
+                  <strong>Cierre ajustado</strong>
+                  <small>100 activos · yfinance auto_adjust</small>
+                </article>
+                <article class="signal-card sc-volume">
+                  <span>Volumen</span>
+                  <strong>volume_ratio</strong>
+                  <small>volumen / media 20d</small>
+                </article>
+                <article class="signal-card sc-tech">
+                  <span>Tecnicos</span>
+                  <strong>retornos + RSI</strong>
+                  <small>1d, 5d, 20d y momentum</small>
+                </article>
+                <article class="signal-card sc-volatility">
+                  <span>Volatilidad</span>
+                  <strong>volatilidad + correlacion</strong>
+                  <small>relacion media entre activos</small>
+                </article>
+              </div>
+
+              <svg viewBox="0 0 640 360" class="market-svg" role="img" aria-label="Velas y volumen de mercado">
+                <defs>
+                  <linearGradient id="marketLine" x1="0%" x2="100%" y1="0%" y2="0%">
+                    <stop offset="0%" stop-color="#22d3ee" />
+                    <stop offset="56%" stop-color="#34d399" />
+                    <stop offset="100%" stop-color="#f59e0b" />
+                  </linearGradient>
+                </defs>
+
+                <g class="panel-axis">
+                  <line x1="64" y1="44" x2="64" y2="286" />
+                  <line x1="64" y1="286" x2="592" y2="286" />
+                  <line x1="64" y1="82" x2="592" y2="82" />
+                  <line x1="64" y1="138" x2="592" y2="138" />
+                  <line x1="64" y1="194" x2="592" y2="194" />
+                  <line x1="64" y1="250" x2="592" y2="250" />
+                </g>
+
+                <path class="market-trace" d="M80 238 C120 204, 152 222, 190 174 S268 154, 305 136 S370 96, 410 120 S476 82, 558 58" />
+
+                <g class="candles">
+                  <g class="candle-group cg-0"><line x1="96" y1="92" x2="96" y2="244" /><rect x="85" y="132" width="22" height="72" rx="3" class="up" /></g>
+                  <g class="candle-group cg-1"><line x1="144" y1="108" x2="144" y2="258" /><rect x="133" y="134" width="22" height="88" rx="3" class="down" /></g>
+                  <g class="candle-group cg-2"><line x1="192" y1="78" x2="192" y2="222" /><rect x="181" y="108" width="22" height="64" rx="3" class="up" /></g>
+                  <g class="candle-group cg-3"><line x1="240" y1="102" x2="240" y2="236" /><rect x="229" y="138" width="22" height="62" rx="3" class="down" /></g>
+                  <g class="candle-group cg-4"><line x1="288" y1="70" x2="288" y2="206" /><rect x="277" y="96" width="22" height="68" rx="3" class="up" /></g>
+                  <g class="candle-group cg-5"><line x1="336" y1="60" x2="336" y2="190" /><rect x="325" y="82" width="22" height="58" rx="3" class="up" /></g>
+                  <g class="candle-group cg-6"><line x1="384" y1="92" x2="384" y2="224" /><rect x="373" y="118" width="22" height="76" rx="3" class="down" /></g>
+                  <g class="candle-group cg-7"><line x1="432" y1="66" x2="432" y2="186" /><rect x="421" y="88" width="22" height="54" rx="3" class="up" /></g>
+                  <g class="candle-group cg-8"><line x1="480" y1="48" x2="480" y2="168" /><rect x="469" y="72" width="22" height="50" rx="3" class="up" /></g>
+                  <g class="candle-group cg-9"><line x1="528" y1="82" x2="528" y2="204" /><rect x="517" y="108" width="22" height="60" rx="3" class="down" /></g>
+                </g>
+
+                <g class="volume-bars">
+                  <rect x="85" y="305" width="22" height="27" rx="3" />
+                  <rect x="133" y="312" width="22" height="20" rx="3" />
+                  <rect x="181" y="298" width="22" height="34" rx="3" />
+                  <rect x="229" y="316" width="22" height="16" rx="3" />
+                  <rect x="277" y="294" width="22" height="38" rx="3" />
+                  <rect x="325" y="302" width="22" height="30" rx="3" />
+                  <rect x="373" y="311" width="22" height="21" rx="3" />
+                  <rect x="421" y="292" width="22" height="40" rx="3" />
+                  <rect x="469" y="286" width="22" height="46" rx="3" />
+                  <rect x="517" y="308" width="22" height="24" rx="3" />
+                </g>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="scene" id="scene-1" aria-labelledby="title-1">
+        <div class="scene-content">
+          <div class="scene-text">
+            <span class="scene-tag">Etapa 2</span>
+            <h2 class="scene-title" id="title-1">Feature Encoders</h2>
+            <p class="scene-desc">El mercado y el contexto entran por canales separados. El encoder de mercado recibe las features, los pesos actuales y factores; el de contexto recibe las senales macro y de regimen. La salida son dos embeddings compactos.</p>
+          </div>
+
+          <div class="scene-visual">
+            <svg viewBox="0 0 720 450" class="encoder-svg" role="img" aria-label="Proceso de feature encoders">
+              <defs>
+                <linearGradient id="marketStream" x1="0%" x2="100%">
+                  <stop offset="0%" stop-color="#22d3ee" />
+                  <stop offset="100%" stop-color="#34d399" />
+                </linearGradient>
+                <linearGradient id="contextStream" x1="0%" x2="100%">
+                  <stop offset="0%" stop-color="#f472b6" />
+                  <stop offset="100%" stop-color="#f59e0b" />
+                </linearGradient>
+              </defs>
+
+              <g class="stage-labels">
+                <text x="140" y="44">Entrada real</text>
+                <text x="358" y="44">MLP encoder</text>
+                <text x="610" y="44">Vectores</text>
+              </g>
+
+              <g class="encoder-input market-input">
+                <rect x="20" y="76" width="240" height="176" rx="8" />
+                <text x="140" y="102">Mercado + portfolio</text>
+                <g class="input-list">
+                  <text x="140" y="132">Senales de mercado</text>
+                  <text x="140" y="156">retornos, vol, RSI</text>
+                  <text x="140" y="180">volume_ratio y momentum</text>
+                  <text x="140" y="204">SPY, correlacion, dispersion</text>
+                  <text x="140" y="228">pesos + beta/mom/low-vol</text>
+                </g>
+              </g>
+
+              <g class="encoder-input context-input">
+                <rect x="20" y="272" width="240" height="144" rx="8" />
+                <text x="140" y="300">Contexto macro</text>
+                <g class="input-list">
+                  <text x="140" y="330">Senales de contexto</text>
+                  <text x="140" y="354">FRED: tipos, empleo, CPI</text>
+                  <text x="140" y="378">VIX, petroleo, EUR/USD</text>
+                  <text x="140" y="400">regimen GMM y stress</text>
+                </g>
+              </g>
+
+              <path class="encoder-path path-market a" d="M260 134 C274 134, 278 132, 292 132" />
+              <path class="encoder-path path-market b" d="M260 166 C274 166, 278 160, 292 160" />
+              <path class="encoder-path path-market c" d="M260 208 C274 208, 278 188, 292 188" />
+              <path class="encoder-path path-context a" d="M260 334 C274 334, 278 292, 292 292" />
+              <path class="encoder-path path-context b" d="M260 382 C274 382, 278 322, 292 322" />
+
+              <g class="encoder-block market-encoder">
+                <rect x="292" y="92" width="158" height="126" rx="8" />
+                <text x="371" y="119">Encoder Mercado</text>
+                <g class="compression-stack">
+                  <rect x="316" y="144" width="102" height="12" rx="6" />
+                  <rect x="326" y="166" width="82" height="12" rx="6" />
+                  <rect x="338" y="188" width="58" height="12" rx="6" />
+                </g>
+              </g>
+
+              <g class="encoder-block context-encoder">
+                <rect x="292" y="252" width="158" height="112" rx="8" />
+                <text x="371" y="279">Encoder Contexto</text>
+                <g class="compression-stack">
+                  <rect x="316" y="304" width="96" height="12" rx="6" />
+                  <rect x="328" y="326" width="72" height="12" rx="6" />
+                </g>
+              </g>
+
+              <path class="encoder-path output-market" d="M450 155 C500 155, 506 136, 548 136" />
+              <path class="encoder-path output-context" d="M450 308 C500 308, 506 288, 548 288" />
+
+              <g class="latent-card market-latent">
+                <rect x="548" y="96" width="132" height="82" rx="8" />
+                <text x="614" y="121">Vector mercado</text>
+                <g class="vector-bars">
+                  <rect x="572" y="144" width="12" height="18" rx="3" />
+                  <rect x="590" y="134" width="12" height="28" rx="3" />
+                  <rect x="608" y="150" width="12" height="12" rx="3" />
+                  <rect x="626" y="128" width="12" height="34" rx="3" />
+                  <rect x="644" y="140" width="12" height="22" rx="3" />
+                </g>
+              </g>
+
+              <g class="latent-card context-latent">
+                <rect x="548" y="248" width="132" height="82" rx="8" />
+                <text x="614" y="273">Vector contexto</text>
+                <g class="vector-bars">
+                  <rect x="572" y="294" width="12" height="18" rx="3" />
+                  <rect x="590" y="286" width="12" height="26" rx="3" />
+                  <rect x="608" y="300" width="12" height="12" rx="3" />
+                  <rect x="626" y="282" width="12" height="30" rx="3" />
+                  <rect x="644" y="292" width="12" height="20" rx="3" />
+                </g>
+              </g>
+
+              <circle class="encoder-packet ep-market" cx="212" cy="146" r="5" />
+              <circle class="encoder-packet ep-context" cx="212" cy="306" r="5" />
+            </svg>
+          </div>
+        </div>
+      </section>
+
+      <section class="scene" id="scene-2" aria-labelledby="title-2">
+        <div class="scene-content">
+          <div class="scene-text">
+            <span class="scene-tag">Etapa 3</span>
+            <h2 class="scene-title" id="title-2">Gating</h2>
+            <p class="scene-desc">El gate se entiende como una compuerta entre 0 y 1. Si esta cerca de 0 domina el mercado; si se acerca a 1 entra mas contexto en la fusion final.</p>
+          </div>
+
+          <div class="scene-visual">
+            <div class="gate-workbench">
+              <div class="gate-inputs">
+                <div class="gate-source source-market">
+                  <span>Vector mercado</span>
+                  <div class="source-bars"><i></i><i></i><i></i></div>
+                </div>
+                <div class="gate-source source-context">
+                  <span>Vector contexto</span>
+                  <div class="source-bars"><i></i><i></i><i></i></div>
+                </div>
+              </div>
+
+              <div class="gate-filter">
+                <span class="gate-scale top">1</span>
+                <div class="gate-track" aria-hidden="true">
+                  <div class="gate-fill" id="gateFill"></div>
+                  <div class="gate-handle" id="gateHandle"></div>
+                </div>
+                <span class="gate-scale bottom">0</span>
+                <input id="gateSlider" class="gate-range" type="range" min="0" max="100" value="100" aria-label="Elegir importancia del contexto" />
+                <strong>Filtro de contexto</strong>
+                <small id="gateFoldLabel">importancia del contexto</small>
+              </div>
+
+              <div class="gate-results">
+                <article class="gate-output-card g-context">
+                  <span>Contexto aplicado</span>
+                  <strong id="gateContextVal">100%</strong>
+                  <div class="gate-output-bar"><i id="gateContextBar"></i></div>
+                </article>
+                <article class="gate-output-card g-fused">
+                  <span>Fusion final</span>
+                  <strong id="gateFusedVal">mercado + 100% contexto</strong>
+                  <div class="gate-output-bar"><i id="gateFusedBar"></i></div>
+                </article>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="scene" id="scene-3" aria-labelledby="title-3">
+        <div class="scene-content">
+          <div class="scene-text">
+            <span class="scene-tag">Etapa 4</span>
+            <h2 class="scene-title" id="title-3">PPO Aprende y Elige</h2>
+            <p class="scene-desc">PPO recibe la representacion final y propone una senal continua por activo. No elige una etiqueta de compra o venta: indica que pesos tienden a subir o bajar, y el entorno lo convierte en una cartera objetivo incremental.</p>
+          </div>
+
+          <div class="scene-visual">
+            <div class="ppo-lab">
+              <div class="ppo-state-panel">
+                <span>Estado que ve PPO</span>
+                <div class="ppo-state-stack">
+                  <article><strong>Mercado</strong><small>senales + estado agregado</small></article>
+                  <article><strong>Portfolio</strong><small>100 pesos actuales</small></article>
+                  <article><strong>Factores</strong><small>beta, momentum, low-vol</small></article>
+                  <article><strong>Contexto</strong><small>macro, regimen y stress</small></article>
+                </div>
+              </div>
+
+              <div class="ppo-agent-panel">
+                <div class="policy-core">
+                  <div class="scan-light"></div>
+                  <span>Propone ajuste por activo</span>
+                  <div class="action-vector" aria-label="Vector de accion de 100 componentes">
+                    <i class="pos"></i><i class="neg"></i><i class="pos"></i><i></i><i class="neg"></i><i class="pos"></i>
+                    <i></i><i class="pos"></i><i class="neg"></i><i></i><i class="pos"></i><i class="neg"></i>
+                    <i class="pos"></i><i></i><i class="neg"></i><i class="pos"></i><i></i><i class="neg"></i>
+                  </div>
+                  <strong>senal continua para 100 activos</strong>
+                </div>
+
+                <div class="ppo-feedback-card">
+                  <span>Recibe reward</span>
+                  <strong>resultado de la cartera ejecutada</strong>
+                  <div class="reward-breakdown">
+                    <article class="reward-good"><b>+</b><span>retorno neto</span></article>
+                    <article class="reward-cost"><b>-</b><span>turnover</span></article>
+                    <article class="reward-risk"><b>-</b><span>drawdown</span></article>
+                  </div>
+                </div>
+
+                <div class="ppo-update-card">
+                  <span>Actualiza la politica</span>
+                  <div class="policy-learning">
+                    <article class="learn-up"><b>ajustes utiles</b><i></i><strong>mas probables</strong></article>
+                    <article class="learn-down"><b>decisiones malas</b><i></i><strong>menos probables</strong></article>
+                  </div>
+                  <strong>refuerza ajustes utiles y penaliza decisiones malas</strong>
+                </div>
+              </div>
+
+              <div class="ppo-decision-card">
+                <span>Salida hacia entorno</span>
+                <strong>Cartera objetivo</strong>
+                <div class="decision-bars">
+                  <label>senales positivas suben peso <i style="--w: 72%"></i></label>
+                  <label>senales negativas reducen peso <i style="--w: 54%"></i></label>
+                  <label>aumentos y reducciones se compensan <i style="--w: 64%"></i></label>
+                  <label>cambio incremental sobre cartera actual <i style="--w: 82%"></i></label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="scene" id="scene-4" aria-labelledby="title-4">
+        <div class="scene-content">
+          <div class="scene-text">
+            <span class="scene-tag">Etapa 5</span>
+            <h2 class="scene-title" id="title-4">Filtro de Ejecucion</h2>
+            <p class="scene-desc">La cartera objetivo no se ejecuta directamente. Primero se controla la intensidad del rebalanceo y despues una capa de seguridad obtiene la cartera valida mas cercana a la propuesta.</p>
+          </div>
+
+          <div class="scene-visual">
+            <div class="execution-flow">
+              <div class="order-card proposed-order">
+                <span>Propuesta PPO</span>
+                <strong>Cartera objetivo</strong>
+                <div class="delta-row up"><b>Suben</b><i></i><em>+</em></div>
+                <div class="delta-row down"><b>Bajan</b><i></i><em>-</em></div>
+                <div class="delta-row flat"><b>Estables</b><i></i><em>0</em></div>
+                <div class="delta-row up"><b>Resto</b><i></i><em>+/-</em></div>
+                <div class="order-metric"><span>cambio propuesto</span><strong id="rawTurnoverMetric">n/d</strong></div>
+              </div>
+
+              <div class="execution-filter">
+                <div class="filter-module turnover-module">
+                  <span>Control de rebalanceo</span>
+                  <div class="rebalance-steps">
+                    <article><b>1</b><span>mide cambio</span></article>
+                    <article><b>2</b><span>aplica budget</span></article>
+                    <article><b>3</b><span>suaviza orden</span></article>
+                  </div>
+                </div>
+
+                <div class="filter-module weights-module">
+                  <span>Capa de seguridad</span>
+                  <div class="constraint-stack">
+                    <article><b>Suma total</b><strong>100%</strong></article>
+                    <article><b>Pesos validos</b><strong>sin negativos</strong></article>
+                    <article><b>Concentracion</b><strong>max 10%</strong></article>
+                    <article><b>Proyeccion</b><strong>OSQP</strong></article>
+                  </div>
+                </div>
+
+                <div class="filter-module risk-module">
+                  <span>Presupuesto adaptativo</span>
+                  <div class="risk-bars">
+                    <label>estres total <i id="stressSignalBar" style="--w:0%"></i></label>
+                    <label>volatilidad <i id="volSignalBar" style="--w:0%"></i></label>
+                    <label>correlacion <i id="corrSignalBar" style="--w:0%"></i></label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="order-card final-order">
+                <span>Orden final</span>
+                <strong>Cartera ejecutada</strong>
+                <div class="delta-row up"><b>Suben</b><i></i><em>+</em></div>
+                <div class="delta-row down"><b>Bajan</b><i></i><em>-</em></div>
+                <div class="delta-row flat"><b>Limite</b><i></i><em>ok</em></div>
+                <div class="delta-row flat"><b>Resto</b><i></i><em>ok</em></div>
+                <div class="order-metric"><span>cambio ejecutado</span><strong id="finalTurnoverMetric">n/d</strong></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="scene" id="scene-5" aria-labelledby="title-5">
+        <div class="scene-content">
+          <div class="scene-text">
+            <span class="scene-tag">Etapa 6</span>
+            <h2 class="scene-title" id="title-5">Portfolio y Reward</h2>
+            <p class="scene-desc">La cartera ejecutada produce el rendimiento del siguiente periodo. El reward se calcula sobre esa cartera final, descontando costes y penalizando rotacion, perdidas y aumento de drawdown.</p>
+          </div>
+
+          <div class="scene-visual">
+            <div class="portfolio-stage">
+              <div class="portfolio-center">
+                <div class="portfolio-head">
+                  <span>Portfolio ejecutado</span>
+                  <strong>w_exec</strong>
+                </div>
+                <div class="portfolio-donut" aria-label="Distribucion visual de pesos ejecutados">
+                  <span>w_exec</span>
+                  <small>100 activos</small>
+                </div>
+                <div class="portfolio-legend" aria-label="Leyenda de colores de portfolio">
+                  <b><i class="lg-high"></i>peso alto</b>
+                  <b><i class="lg-mid"></i>peso medio</b>
+                  <b><i class="lg-low"></i>peso bajo</b>
+                  <b><i class="lg-rest"></i>resto</b>
+                </div>
+              </div>
+
+              <div class="portfolio-breakdown">
+                <article><span>Retorno bruto</span><strong><b id="grossReturnMetric" class="count-up" data-target="0" data-decimals="2" data-prefix="+" data-suffix="%">+0%</b></strong><i id="grossReturnBar" style="--w:0%"></i></article>
+                <article><span>Retorno neto</span><strong><b id="netReturnMetric" class="count-up" data-target="0" data-decimals="2" data-prefix="+" data-suffix="%">+0%</b></strong><i id="netReturnBar" style="--w:0%"></i></article>
+                <article><span>Turnover ejecutado</span><strong><b id="portfolioTurnoverMetric" class="count-up" data-target="0" data-decimals="1" data-suffix="%">0%</b></strong><i id="portfolioTurnoverBar" style="--w:0%"></i></article>
+                <article><span>Drawdown incremental</span><strong><b id="drawdownMetric" class="count-up" data-target="0" data-decimals="2" data-suffix="%">0%</b></strong><i id="drawdownBar" style="--w:0%"></i></article>
+              </div>
+
+              <div class="reward-panel">
+                <span>Reward</span>
+                <strong id="rewardMetric" class="reward-value" data-target="0" data-decimals="5">+0.00000</strong>
+                <svg viewBox="0 0 210 92" aria-hidden="true">
+                  <path class="reward-chart" d="M10 72 C34 64, 48 70, 70 52 S114 32, 140 38 S174 22, 200 16" />
+                  <circle cx="200" cy="16" r="5" />
+                </svg>
+                <div class="reward-cycle"><b>reward</b><i></i><b>actualiza PPO</b><i></i><b>estado t+1</b></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <nav class="process-nav" aria-label="Control del proceso">
+    <button class="nav-button secondary" id="prevBtn" type="button" aria-label="Paso anterior">
+      <span aria-hidden="true">&larr;</span>
+    </button>
+
+    <div class="step-indicator" id="stepIndicator" aria-label="Etapas">
+      <button class="step-dot active" type="button" data-i="0" aria-label="Ir a etapa 1"></button>
+      <button class="step-dot" type="button" data-i="1" aria-label="Ir a etapa 2"></button>
+      <button class="step-dot" type="button" data-i="2" aria-label="Ir a etapa 3"></button>
+      <button class="step-dot" type="button" data-i="3" aria-label="Ir a etapa 4"></button>
+      <button class="step-dot" type="button" data-i="4" aria-label="Ir a etapa 5"></button>
+      <button class="step-dot" type="button" data-i="5" aria-label="Ir a etapa 6"></button>
+    </div>
+
+    <button class="nav-button primary" id="nextBtn" type="button">
+      <span id="nextLabel">Siguiente paso</span>
+      <span aria-hidden="true">&rarr;</span>
+    </button>
+  </nav>
+
+  <script src="demo-data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

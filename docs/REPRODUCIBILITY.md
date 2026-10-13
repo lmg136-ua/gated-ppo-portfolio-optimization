@@ -1,41 +1,72 @@
-# Reproducibility
+# Reproducibility Guide
 
-## Configuracion
+This guide describes how to reproduce the experiments, regenerate datasets, and run the benchmark evaluations for the **Gated PPO Portfolio Optimization** framework.
 
-- `config/config.yaml`: configuracion activa del proyecto
+---
 
-## Requisitos
+## 1. Environment & Dependencies
 
-- Python con dependencias de `requirements.txt`
-- `pyarrow` para lectura/escritura parquet
-- `FRED_API_KEY` para modo experimento
+* Python 3.10 or higher
+* Core dependencies listed in `requirements.txt`
+* `pyarrow` for reading/writing parquet files
+* `FRED_API_KEY` environment variable (required only if downloading new macroeconomic data from FRED)
 
-## Datos raw esperados localmente
+```bash
+# Setup virtual environment
+python -m venv venv
+source venv/bin/activate  # On Windows: .\venv\Scripts\activate
 
-En `runtime/data/raw/` deben existir:
+# Install dependencies
+pip install -r requirements.txt
+```
 
-- `prices_raw.parquet`
-- `volumes_raw.parquet`
-- `benchmark_raw.parquet`
-- `market_bundle_metadata.yaml`
-- `fred_context.parquet`
-- `fred_context_metadata.yaml`
+---
 
-## Regenerar datos
+## 2. Active Configuration
+
+The canonical experiment parameters are defined in:
+* `config/config.yaml`: Controls the universe (100 assets), walk-forward windows (4y train, 1y val, 1y test, 6m slide), feature dimensions, neural network architecture, reward functions, safety layer parameters, and execution frictions.
+
+---
+
+## 3. Data Structure
+
+Pre-curated datasets used in the final evaluation are provided in `dataset/raw/`:
+* `prices_raw.parquet`: Daily adjusted closing prices for 100 S&P equities.
+* `volumes_raw.parquet`: Daily volume series for all 100 universe equities.
+* `benchmark_raw.parquet`: Daily adjusted price and return series for S&P 500 ETF (`SPY`).
+* `fred_context.parquet`: Macroeconomic time series fetched from FRED (`DGS10`, `DGS2`, `T10Y2Y`, `UNRATE`, `CPIAUCSL`, `FEDFUNDS`, `VIXCLS`, `DCOILWTICO`, `DEXUSEU`).
+* Associated YAML metadata files.
+
+### Regenerating Raw Data Locally
+
+To rebuild the market bundle and FRED context from scratch:
 
 ```bash
 python experiments/run_experiment.py --mode baselines_only --force-refresh-data --max-folds 1
 ```
 
-Ese comando regenera localmente el bundle de mercado y el contexto FRED.
+---
 
-## Ejecucion principal
+## 4. Running Experiments
+
+### A. Classical Baselines Only
+Runs Equal Weight, Inverse Volatility, Markowitz Mean-Variance, and Minimum Variance against the S&P 500 benchmark:
+
+```bash
+python experiments/run_experiment.py --mode baselines_only
+```
+
+### B. Full Walk-Forward Experiment (`PPO_gated_full`)
+Runs the complete 13-fold out-of-sample walk-forward evaluation:
 
 ```bash
 python experiments/run_experiment.py --mode full
 ```
 
-## Salidas
+---
 
-- resultados finales incluidos en el repo: `results/final_v2/`
-- datos raw, logs, manifests, checkpoints y resúmenes intermedios se generan en `runtime/` y no se versionan
+## 5. Experiment Outputs & Artifacts
+
+* **Curated Final Results**: Located in `results/final_v2/` (version-controlled and documented in the repository).
+* **Runtime Data & Checkpoints**: Intermediate training logs, TensorBoard events, checkpoints, and execution manifests are written to `runtime/` (git-ignored to keep the repository lightweight).
